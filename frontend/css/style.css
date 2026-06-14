@@ -1,0 +1,454 @@
+/* =========================================
+   1. 全局重置与基础样式 (Reset & Base)
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    font-size: 16px;
+    padding-top: 130px; /* 为固定头部留出空间 (80px header + 50px nav) */
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================
+   2. 头部样式 (Header)
+   ========================================= */
+.header {
+    width: 100%;
+    height: 80px;
+    background-color: #1E88E5; /* 科技蓝 */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed; /* 固定定位 */
+    top: 0;
+    left: 0;
+    z-index: 1001; /* 保证在最上层，比nav高 */
+}
+
+.header__container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* ... (header children styles remain same but context ensures correctness) ... */
+.header__title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header__icon {
+    font-size: 32px;
+}
+
+/* =========================================
+   3. 导航栏样式 (Navigation)
+   ========================================= */
+.nav {
+    width: 100%;
+    height: 50px;
+    background-color: #0D47A1; /* 深蓝 */
+    display: flex;
+    justify-content: center;
+    position: fixed; /* 固定定位 */
+    top: 80px; /* 紧接在header下方 */
+    left: 0;
+    z-index: 1000; /* 保证在内容层之上 */
+}
+
+.nav__container {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav__list {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start; /* 默认左对齐，或者根据要求居中 */
+}
+
+/* 题目要求：文字居中 */
+.nav__list {
+    justify-content: center;
+}
+
+.nav__item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav__link {
+    color: #fff;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 16px;
+}
+
+/* 导航hover效果：背景变色 + 下划线动画 */
+.nav__link:hover {
+    background-color: #2196F3;
+}
+
+.nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: #fff;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav__link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* 移动端汉堡菜单按钮 (默认隐藏) */
+.nav__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    padding: 0;
+}
+
+.nav__toggle-bar {
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+/* =========================================
+   4. 主体内容样式 (Main)
+   ========================================= */
+.main {
+    width: 100%;
+    min-height: calc(100vh - 190px); /* 减去header+nav+footer高度 */
+    background-color: #fff;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.main__container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    display: grid;
+    /* PC端布局：前3个并排，第4个单独一行，或者网格布局 */
+    /* 这里采用Grid布局实现灵活排版 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* =========================================
+   5. 卡片样式 (Cards)
+   ========================================= */
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid transparent; /* 顶部彩色边框 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 卡片hover效果 */
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card__title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.card__list {
+    flex: 1;
+}
+
+.card__item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* 改为垂直布局 */
+    line-height: 1.6;
+    position: relative; /* 为tooltip定位 */
+}
+
+/* 标题行容器 */
+.card__item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.card__icon {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.card__item-title {
+    font-size: 16px;
+    color: #333;
+}
+
+.card__item-desc {
+    font-size: 14px;
+    color: #666;
+    margin-left: 28px; /* 与标题对齐 (icon width + margin) */
+    text-align: justify;
+}
+
+/* 核心知识点高亮 */
+.highlight {
+    background-color: #E3F2FD;
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: #0D47A1;
+    font-weight: bold;
+    cursor: help;
+}
+
+/* 不同卡片的边框色 */
+.card--guide { border-top-color: #29B6F6; background-color: #FAFDFF; } /* 浅蓝 */
+.card--recommend { border-top-color: #B39DDB; background-color: #FDFBFF; } /* 浅紫 */
+.card--service { border-top-color: #66BB6A; background-color: #F1F8F2; } /* 浅绿 */
+.card--analysis { 
+    border-top-color: #FFEE58; 
+    background-color: #FFFDE7; /* 浅黄背景 */
+    grid-column: span 3; /* 第4个卡片在PC端跨3列 */
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+}
+
+.modal--visible {
+    display: flex;
+}
+
+.modal__mask {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.modal__content {
+    position: relative;
+    width: 90%;
+    max-width: 520px;
+    max-height: 80vh;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    padding: 24px 24px 20px;
+    animation: modalFade 0.2s ease-out;
+    overflow: hidden;
+}
+
+.modal__title {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #0D47A1;
+}
+
+.modal__body {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    color: #666;
+}
+
+.modal__close:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 简单的CSS Tooltip实现 */
+.card__item[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+    margin-bottom: 5px;
+}
+
+/* =========================================
+   6. 页脚样式 (Footer)
+   ========================================= */
+.footer {
+    width: 100%;
+    height: 60px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* =========================================
+   7. 响应式适配 (Media Queries)
+   ========================================= */
+@media screen and (max-width: 768px) {
+    /* 调整body内边距以适应变小的header */
+    body {
+        padding-top: 110px; /* 60px header + 50px nav */
+    }
+
+    /* 导航栏适配：汉堡菜单 */
+    .nav {
+        justify-content: space-between;
+        padding: 0;
+        top: 60px; /* 移动端header变矮 */
+    }
+
+    .nav__container {
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+    
+    .nav__toggle {
+        display: flex; /* 显示汉堡按钮 */
+    }
+
+    .nav__list {
+        display: none; /* 默认隐藏菜单项 */
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        background-color: #0D47A1;
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* 点击展开时的类 */
+    .nav__list--active {
+        display: flex;
+    }
+
+    .nav__item {
+        width: 100%;
+        height: 50px;
+        justify-content: center;
+    }
+
+    .nav__link {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .nav__link::after {
+        display: none; /* 移动端去掉下划线动画 */
+    }
+
+    /* 主体内容适配：单列布局 */
+    .main__container {
+        grid-template-columns: 1fr; /* 单列 */
+        gap: 20px;
+    }
+
+    .card--analysis {
+        grid-column: span 1; /* 恢复占1列 */
+    }
+
+    /* 字体与间距调整 */
+    .header {
+        height: 60px;
+    }
+    
+    .header__title {
+        font-size: 18px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+    
+    .card__title {
+        font-size: 18px;
+    }
+}
